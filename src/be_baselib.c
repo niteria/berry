@@ -505,14 +505,14 @@ void be_load_baselib_next(bvm *vm)
 {
     be_regfunc(vm, "call", l_call);
     be_regfunc(vm, "bool", l_bool);
-    be_regfunc(vm, "format", be_str_format);
+    //be_regfunc(vm, "format", be_str_format);
 }
 #else
 extern const bclass be_class_list;
 extern const bclass be_class_map;
 extern const bclass be_class_range;
 extern const bclass be_class_bytes;
-extern int be_nfunc_open(bvm *vm);
+// extern int be_nfunc_open(bvm *vm);
 /* @const_object_info_begin
 vartab m_builtin (scope: local) {
     assert, func(be_baselib_assert)

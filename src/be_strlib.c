@@ -268,7 +268,7 @@ int be_char2hex(int c)
  *                    |  '- - -'                 |
  *                    |                          |
  *                    +- 0x or 0X ---hex_digits--+
- * 
+ *
  *******************************************************************/
 BERRY_API bint be_str2int(const char *str, const char **endstr)
 {
@@ -305,13 +305,13 @@ BERRY_API bint be_str2int(const char *str, const char **endstr)
 /*******************************************************************
  * the function be_str2real():
  * >>-+------------+--+-----+--+-digits--+---+--+--------+-+------->
- *    '-whitespace-'  +- + -+  |         '-.-'  '-digits-' |   
- *                    '- - -'  '-.--digits-----------------'   
- * 
+ *    '-whitespace-'  +- + -+  |         '-.-'  '-digits-' |
+ *                    '- - -'  '-.--digits-----------------'
+ *
  * >--+------------------------+----------------------------------><
- *    '-+-e-+--+-----+--digits-'   
- *      '-E-'  +- + -+             
- *             '- - -'  
+ *    '-+-e-+--+-----+--digits-'
+ *      '-E-'  +- + -+
+ *             '- - -'
  *******************************************************************/
 BERRY_API breal be_str2real(const char *str, const char **endstr)
 {
@@ -361,7 +361,7 @@ BERRY_API breal be_str2real(const char *str, const char **endstr)
  **/
 BERRY_API const char *be_str2num(bvm *vm, const char *str)
 {
-    const char *sout; 
+    const char *sout;
     bint c, vint = be_str2int(str, &sout);
     c = *sout;
     if (c == '.' || c == 'e' || c == 'E') {
@@ -562,7 +562,7 @@ static const char* get_mode(const char *str, char *buf, size_t buf_len)
     *(buf++) = '%';
     size_t mode_size = p - str + 1;
     /* Leave 2 bytes for the leading % and the trailing '\0' */
-    if (mode_size > buf_len - 2) { 
+    if (mode_size > buf_len - 2) {
         mode_size = buf_len - 2;
     }
     strncpy(buf, str, mode_size);
@@ -1027,7 +1027,7 @@ static int str_endswith(bvm *vm)
 
 #if !BE_USE_PRECOMPILED_OBJECT
 be_native_module_attr_table(string) {
-    be_native_module_function("format", be_str_format),
+    // be_native_module_function("format", be_str_format),
     be_native_module_function("count", str_count),
     be_native_module_function("split", str_split),
     be_native_module_function("find", str_find),

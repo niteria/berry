@@ -199,16 +199,16 @@ static const char* _sgets(struct blexer* lexer, void *data, size_t *size)
     return NULL;
 }
 
-static const char* _fgets(struct blexer* lexer, void *data, size_t *size)
-{
-    (void)lexer;
-    struct filebuf *fb = data;
-    *size = be_fread(fb->fp, fb->buf, sizeof(fb->buf));
-    if (*size) {
-        return fb->buf;
-    }
-    return NULL;
-}
+// static const char* _fgets(struct blexer* lexer, void *data, size_t *size)
+// {
+//     (void)lexer;
+//     struct filebuf *fb = data;
+//     *size = be_fread(fb->fp, fb->buf, sizeof(fb->buf));
+//     if (*size) {
+//         return fb->buf;
+//     }
+//     return NULL;
+// }
 
 BERRY_API int be_loadbuffer(bvm *vm,
     const char *name, const char *buffer, size_t length)
@@ -219,18 +219,18 @@ BERRY_API int be_loadbuffer(bvm *vm,
     return be_protectedparser(vm, name, _sgets, &sbuf, bfalse);
 }
 
-static int fileparser(bvm *vm, const char *name, bbool islocal)
-{
-    int res = BE_IO_ERROR;
-    struct filebuf *fbuf = be_malloc(vm, sizeof(struct filebuf));
-    fbuf->fp = be_fopen(name, "r");
-    if (fbuf->fp) {
-        res = be_protectedparser(vm, name, _fgets, fbuf, islocal);
-        be_fclose(fbuf->fp);
-    }
-    be_free(vm, fbuf, sizeof(struct filebuf));
-    return res;
-}
+// static int fileparser(bvm *vm, const char *name, bbool islocal)
+// {
+//     int res = BE_IO_ERROR;
+//     struct filebuf *fbuf = be_malloc(vm, sizeof(struct filebuf));
+//     fbuf->fp = be_fopen(name, "r");
+//     if (fbuf->fp) {
+//         res = be_protectedparser(vm, name, _fgets, fbuf, islocal);
+//         be_fclose(fbuf->fp);
+//     }
+//     be_free(vm, fbuf, sizeof(struct filebuf));
+//     return res;
+// }
 #endif /* BE_USE_SCRIPT_COMPILER */
 
 #if BE_USE_BYTECODE_LOADER
@@ -267,13 +267,13 @@ static int load_bytecode(bvm *vm, const char *name)
 BERRY_API int be_loadmode(bvm *vm, const char *name, bbool islocal)
 {
     int res = load_bytecode(vm, name);
-#if BE_USE_SCRIPT_COMPILER
-    if (res && res != BE_IO_ERROR && res != BE_EXCEPTION) {
-        res = fileparser(vm, name, islocal);
-    }
-#else
+// #if BE_USE_SCRIPT_COMPILER
+//     if (res && res != BE_IO_ERROR && res != BE_EXCEPTION) {
+//         res = fileparser(vm, name, islocal);
+//     }
+// #else
     (void)islocal;
-#endif
+// #endif
     if (res == BE_IO_ERROR) {
         be_pushfstring(vm, "cannot open file '%s'.", name);
     }
