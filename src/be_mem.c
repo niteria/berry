@@ -43,7 +43,19 @@
 static int ffs(unsigned x)
 {
     unsigned long i;
-    return _BitScanForward(&i, x) ? i : 0;
+    // From GCC docs:
+    // int __builtin_ffs (int x)
+    // Returns one plus the index of the least significant 1-bit of x, or if x is zero, returns zero.
+    //
+    // From MSVC docs for _BitScanForward:
+    // https://learn.microsoft.com/en-us/cpp/intrinsics/bitscanforward-bitscanforward64?view=msvc-170
+    //
+    // If a set bit is found, the bit position of the first set bit is written to the address specified in the first parameter and the function returns 1. If no bit is found, the function returns 0 and the value written to the address in the first parameter is undefined.
+    //
+    // And the example:
+    // _BitScanForward(&index, 12) populates index with 2
+
+    return _BitScanForward(&i, x) ? i + 1 : 0;
 }
 #else
 /* https://github.com/hcs0/Hackers-Delight/blob/master/pop.c.txt - count number of 1-bits */
