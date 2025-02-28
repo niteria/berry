@@ -63,4 +63,4 @@ static const bvalue __vlist_array[] = {
 static be_define_const_vector(
     m_builtin_vector,
     __vlist_array,
-    25);
+    23);
